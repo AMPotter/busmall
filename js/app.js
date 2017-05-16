@@ -30,7 +30,7 @@ function productInit() {
     var sweep = new Product('Filthy Baby', './images/sweep.png', 'sweep', 'The final frontier of child labor lawbreaking.');
     var tauntaun = new Product('Taun Taun', './images/tauntaun.jpg', 'tauntaun', 'Juicy innards for sleeping in.');
     var unicorn = new Product('Unicorn Meat', './images/unicorn.jpg', 'unicorn', 'Now with more bits. Gluten free.');
-    var usb = new Product('Adult Toy', './images/usb.gif', 'usb', 'You\'re sick.');
+    var usb = new Product('Tentacle Wiggler', './images/usb.gif', 'usb', 'Don\'t be weird.');
     var waterCan = new Product('Ergonomic Water Bottle', './images/water-can.jpg', 'watercan', 'Drink up, idiot.');
     var wineGlass = new Product('Booze Egg', './images/wine-glass.jpg', 'wineglass', 'For slurpin\'.');
 }
@@ -41,13 +41,13 @@ var tracker = {
     choice2name: document.getElementById('choice2name')[0],
     choice3name: document.getElementById('choice3name')[0],
     
-    choice1img: document.getElementById('choice1img')[0],
-    choice2img: document.getElementById('choice2img')[0],
-    choice3img: document.getElementById('choice3img')[0],
+    choice1img: document.getElementById('choice1img')[1],
+    choice2img: document.getElementById('choice2img')[1],
+    choice3img: document.getElementById('choice3img')[1],
 
-    choice1description: document.getElementById('choice1description')[0],
-    choice2description: document.getElementById('choice2description')[0],
-    choice3description: document.getElementById('choice3description')[0],
+    choice1description: document.getElementById('choice1description')[3],
+    choice2description: document.getElementById('choice2description')[3],
+    choice3description: document.getElementById('choice3description')[3],
 
     interfaceSection: document.getElementById('interface'),
     voteCount: 0,
@@ -65,20 +65,6 @@ var tracker = {
             if (selectedIndeces.indexOf(item) === -1) {
                 selectedIndeces.push(item);
             }
-
-                //using indexOf for loop
-            // if (selectedIndeces.length === 0) {
-            //     selectedIndeces.push(item);
-            // }
-
-            // for (var i = 0; i < selectedIndeces.length; i++) {
-            //     if (selectedIndeces[i] === item) {
-            //         break;
-            //     } else {
-            //         selectedIndeces.push(item);
-            //         break;
-            //     }
-            // }
         }
         
         return selectedIndeces;
@@ -101,10 +87,6 @@ var tracker = {
         choice2name.innerText = product2.name;
         choice3name.innerText = product3.name;
 
-        choice1name.id = product1.id;
-        choice2name.id = product2.id;
-        choice3name.id = product3.id;
-
         choice1img.src = product1.src;
         choice2img.src = product2.src;
         choice3img.src = product3.src;
@@ -112,23 +94,10 @@ var tracker = {
         choice1description.innerText = product1.description;
         choice2description.innerText = product2.description;
         choice3description.innerText = product3.description;
-
-        // choice1img.innerText = product1.img;
-        // choice2img.innerText = product2.img;
-        // choice3img.innertext = product3.img;
-
     },
 
     totalVotes: function(id) {
         this.voteCount += 1;
-
-        //for loop
-        // for (var i = 0; i < productsArray.length; i++) {
-        //     var product = productsArray[i];
-        //     if (product.id === id) {
-        //         product.voteCount += 1;
-        //     }
-        // }
 
         //for each loop
         productsArray.forEach(function foo (product) {
@@ -137,13 +106,13 @@ var tracker = {
             }
         });
 
-        if (totalVotes > 25) {
+        if (totalVotes > 24) {
             this.showResults();
         }
     },
 
     showResults: function() {
-        this.interfaceSection.removeEventListener('click', voteHandler)
+        this.interfaceSection.removeEventListener('click', voteHandler);
     }
 
 };
@@ -151,6 +120,8 @@ var tracker = {
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
     if (event.target.id !== 'interface') {
+        this.voteCount += 1;
+        totalVotes += 1;
         tracker.totalVotes(event.target.id);
         tracker.displayOptions();
     }
