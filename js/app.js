@@ -104,6 +104,15 @@ var tracker = {
         choice1name.id = product1.id;
         choice2name.id = product2.id;
         choice3name.id = product3.id;
+
+        choice1description.innerText = product1.description;
+        choice2description.innerText = product2.description;
+        choice3description.innerText = product3.description;
+
+        // choice1img.innerText = product1.img;
+        // choice2img.innerText = product2.img;
+        // choice3img.innertext = product3.img;
+
     },
 
     totalVotes: function(id) {
@@ -124,7 +133,7 @@ var tracker = {
             }
         });
 
-        if (this.totalVotes > 25) {
+        if (totalVotes > 25) {
             this.showResults();
         }
     },
@@ -133,7 +142,7 @@ var tracker = {
         this.interfaceSection.removeEventListener('click', voteHandler)
     }
 
-}
+};
 
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
