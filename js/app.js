@@ -36,38 +36,40 @@ function productInit() {
 }
 
 var tracker = {
-    //snag all the DOM elements
-    choice1name: document.getElementById('choice1name')[0],
-    choice2name: document.getElementById('choice2name')[0],
-    choice3name: document.getElementById('choice3name')[0],
-    
-    choice1img: document.getElementById('choice1img')[1],
-    choice2img: document.getElementById('choice2img')[1],
-    choice3img: document.getElementById('choice3img')[1],
+    selectedIndeces: [],
 
-    choice1description: document.getElementById('choice1description')[3],
-    choice2description: document.getElementById('choice2description')[3],
-    choice3description: document.getElementById('choice3description')[3],
+    //snag all the DOM elements
+    choice1name: document.getElementById('choice1name'),
+    choice2name: document.getElementById('choice2name'),
+    choice3name: document.getElementById('choice3name'),
+    
+    choice1img: document.getElementById('choice1img'),
+    choice2img: document.getElementById('choice2img'),
+    choice3img: document.getElementById('choice3img'),
+
+    choice1description: document.getElementById('choice1description'),
+    choice2description: document.getElementById('choice2description'),
+    choice3description: document.getElementById('choice3description'),
 
     interfaceSection: document.getElementById('interface'),
-    voteCount: 0,
 
     randomIndex: function(arr) {
         return Math.floor(Math.random() * arr.length);
     },
 
     getIndeces: function(arr) {
-        var selectedIndeces = [];
-        while (selectedIndeces.length < 3) {
+        var noRepeatArray = this.selectedIndeces;
+        this.selectedIndeces = [];
+        while (this.selectedIndeces.length < 3) {
             var item = this.randomIndex(arr);
 
             //getting indexOf
-            if (selectedIndeces.indexOf(item) === -1) {
-                selectedIndeces.push(item);
+            if (this.selectedIndeces.indexOf(item) === -1 && noRepeatArray.indexOf(item) === -1)  {
+                this.selectedIndeces.push(item);
             }
         }
         
-        return selectedIndeces;
+        return this.selectedIndeces;
 
     },
 
@@ -88,8 +90,11 @@ var tracker = {
         choice3name.innerText = product3.name;
 
         choice1img.src = product1.src;
+        choice1img.alt = index1;
         choice2img.src = product2.src;
+        choice2img.alt = index2;
         choice3img.src = product3.src;
+        choice3img.alt = index3;
 
         choice1description.innerText = product1.description;
         choice2description.innerText = product2.description;
@@ -97,12 +102,12 @@ var tracker = {
     },
 
     totalVotes: function(id) {
-        this.voteCount += 1;
+        this.voteCount ++;
 
         //for each loop
         productsArray.forEach(function foo (product) {
             if (product.id === id) {
-                product.voteCount += 1;
+                product.voteCount ++;
             }
         });
 
@@ -112,18 +117,22 @@ var tracker = {
     },
 
     showResults: function() {
+        for (var i = 0; i < productsArray.length; i++) {
+            console.log(productsArray[i].name + ' got ' + productsArray[i].voteCount + ' votes.');
+        }
         this.interfaceSection.removeEventListener('click', voteHandler);
     }
 
 };
-
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
-    if (event.target.id !== 'interface') {
-        this.voteCount += 1;
-        totalVotes += 1;
+    if (event.target.alt) {
+        productsArray[event.target.alt].voteCount ++;
+        productsArray[event.target.alt].timesShown ++;
+        totalVotes ++;
         tracker.totalVotes(event.target.id);
         tracker.displayOptions();
+        console.log(productsArray[event.target.alt]);
     }
 }
 
