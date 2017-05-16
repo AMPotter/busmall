@@ -1,9 +1,9 @@
 var productsArray = [];
 var totalVotes = 0;
 
-function Product (name, filePath, id, description) {
+function Product (name, src, id, description) {
     this.name = name;
-    this.filePath = filePath;
+    this.src = src;
     this.id = id;
     this.description = description;
     this.voteCount = 0;
@@ -14,7 +14,7 @@ function Product (name, filePath, id, description) {
 
 function productInit() {
     var bag = new Product('Bag', './images/bag.jpg', 'bag', 'A bag that looks like a little robot.');
-    var banana = new Product('Banana Slicer', './image/banana.jpg', 'banana', 'Use for nefarious purposes.');
+    var banana = new Product('Banana Slicer', './images/banana.jpg', 'banana', 'Use for nefarious purposes.');
     var bathroom = new Product('iPad Poop Mount', './images/bathroom.jpg', 'bathroom', 'Scroll endlessly through your newsfeed atop your porcelain throne.');
     var boots = new Product('Boots', './images/boots.jpg', 'boots', 'Terrible boots.');
     var breakfast = new Product('All In One Breakfast Maker', './images/breakfast.jpg', 'breakfast', 'Perfect for the tiny closet you live in.');
@@ -104,6 +104,10 @@ var tracker = {
         choice1name.id = product1.id;
         choice2name.id = product2.id;
         choice3name.id = product3.id;
+
+        choice1img.src = product1.src;
+        choice2img.src = product2.src;
+        choice3img.src = product3.src;
 
         choice1description.innerText = product1.description;
         choice2description.innerText = product2.description;
