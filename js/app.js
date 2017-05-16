@@ -97,13 +97,13 @@ var tracker = {
         var product3 = productsArray[index3];
 
         //append to DOM
-        this.choice1name.innerText = product1.name;
-        this.choice2name.innerText = product2.name;
-        this.choice2name.innerText = product3.name;
+        choice1name.innerText = product1.name;
+        choice2name.innerText = product2.name;
+        choice3name.innerText = product3.name;
 
-        this.choice1name.id = product1.id;
-        this.choice2name.id = product2.id;
-        this.choice3name.id = product3.id;
+        choice1name.id = product1.id;
+        choice2name.id = product2.id;
+        choice3name.id = product3.id;
     },
 
     totalVotes: function(id) {
