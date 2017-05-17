@@ -113,7 +113,32 @@ var tracker = {
             }
         });
 
-        if (totalVotes === 24) {
+        if (totalVotes === 25) {
+            var canvas = document.getElementById('votesChart').getContext('2d');
+
+            var barData = {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            fillColor: 'green',
+                            strokeColor: 'pink',
+                            data: []
+                        }
+                    ]
+                }
+            }
+
+            for (var g = 0; g < productsArray.length; g++) {
+                barData.data.labels.push(productsArray[g].name);
+            }
+
+            for (var i = 0; i < productsArray.length; i++) {
+                barData.data.datasets[0].data.push(productsArray[i].voteCount);
+            }
+            new Chart(canvas, barData);
+
             this.showResults();
         }
     },
@@ -127,6 +152,7 @@ var tracker = {
 
 };
 
+
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
     if (event.target.alt) {
@@ -139,27 +165,68 @@ function voteHandler() {
     }
 }
 
-var canvas = document.getElementById('votesChart').getContext('2d');
-new Chart(votesChart).Bar(barData);
 
-var barData = {
-    //fill with array of products
-    labels: [],
-    datasets: [
-        {
-            fillColor: 'white',
-            strokeColor: 'black',
-            data: [
 
-            ]
-        }
-    ]
-};
 
-productsArray.forEach(function(product)) {
-    var chartVotes = product.voteCount;
-    barData.datasets.push(chartVotes);
-};
+
+
+
+
+
+
+
+
+
+
+
+// Array.prototype.myForEach = function(callback) {
+//   for(var i = 0; i < this.length; i++){
+//     callback(this[i], i, this);
+//   }
+// };
+
+// new Chart(document.getElementById('votesChart'), {
+//     type: 'bar',
+//     data: {
+//         labels:
+//             productsArray.myForEach(function(name) {
+//                 console.log(name);
+//             },
+//         datasets: [
+//             {
+//                 label: 'Votes',
+//                 backgroundColor: 'white',
+//                 data: 
+//                     productsArray.myForEach(function(voteCount) {
+//                         console.log(voteCount);
+//                     })
+//         }]
+//     }
+// });
+
+// var context = document.getElementById('votesChart').getContext('2d');
+// context.fillStyle = 'white';
+// context.fillRect = 
+// new Chart(votesChart).Bar(barData);
+
+// var barData = {
+//     //fill with array of products
+//     labels: [],
+//     datasets: [
+//         {
+//             fillColor: 'white',
+//             strokeColor: 'black',
+//             data: [
+
+//             ]
+//         }
+//     ]
+// };
+
+// productsArray.forEach(function(product)) {
+//     var chartVotes = product.voteCount;
+//     barData.datasets.push(chartVotes);
+// };
 
 productInit();
 tracker.displayOptions();
