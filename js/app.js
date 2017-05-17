@@ -1,9 +1,11 @@
+'use strict';
+
 var productsArray = [];
 var totalVotes = 0;
 
-function Product (name, filePath, id, description) {
+function Product (name, src, id, description) {
     this.name = name;
-    this.filePath = filePath;
+    this.src = src;
     this.id = id;
     this.description = description;
     this.voteCount = 0;
@@ -14,7 +16,7 @@ function Product (name, filePath, id, description) {
 
 function productInit() {
     var bag = new Product('Bag', './images/bag.jpg', 'bag', 'A bag that looks like a little robot.');
-    var banana = new Product('Banana Slicer', './image/banana.jpg', 'banana', 'Use for nefarious purposes.');
+    var banana = new Product('Banana Slicer', './images/banana.jpg', 'banana', 'Use for nefarious purposes.');
     var bathroom = new Product('iPad Poop Mount', './images/bathroom.jpg', 'bathroom', 'Scroll endlessly through your newsfeed atop your porcelain throne.');
     var boots = new Product('Boots', './images/boots.jpg', 'boots', 'Terrible boots.');
     var breakfast = new Product('All In One Breakfast Maker', './images/breakfast.jpg', 'breakfast', 'Perfect for the tiny closet you live in.');
@@ -30,58 +32,46 @@ function productInit() {
     var sweep = new Product('Filthy Baby', './images/sweep.png', 'sweep', 'The final frontier of child labor lawbreaking.');
     var tauntaun = new Product('Taun Taun', './images/tauntaun.jpg', 'tauntaun', 'Juicy innards for sleeping in.');
     var unicorn = new Product('Unicorn Meat', './images/unicorn.jpg', 'unicorn', 'Now with more bits. Gluten free.');
-    var usb = new Product('Adult Toy', './images/usb.gif', 'usb', 'You\'re sick.');
+    var usb = new Product('Tentacle Wiggler', './images/usb.gif', 'usb', 'Don\'t be weird.');
     var waterCan = new Product('Ergonomic Water Bottle', './images/water-can.jpg', 'watercan', 'Drink up, idiot.');
     var wineGlass = new Product('Booze Egg', './images/wine-glass.jpg', 'wineglass', 'For slurpin\'.');
 }
 
 var tracker = {
-    //snag all the DOM elements
-    choice1name: document.getElementById('choice1name')[0],
-    choice2name: document.getElementById('choice2name')[0],
-    choice3name: document.getElementById('choice3name')[0],
-    
-    choice1img: document.getElementById('choice1img')[0],
-    choice2img: document.getElementById('choice2img')[0],
-    choice3img: document.getElementById('choice3img')[0],
+    selectedIndeces: [],
 
-    choice1description: document.getElementById('choice1description')[0],
-    choice2description: document.getElementById('choice2description')[0],
-    choice3description: document.getElementById('choice3description')[0],
+    //snag all the DOM elements
+    choice1name: document.getElementById('choice1name'),
+    choice2name: document.getElementById('choice2name'),
+    choice3name: document.getElementById('choice3name'),
+    
+    choice1img: document.getElementById('choice1img'),
+    choice2img: document.getElementById('choice2img'),
+    choice3img: document.getElementById('choice3img'),
+
+    choice1description: document.getElementById('choice1description'),
+    choice2description: document.getElementById('choice2description'),
+    choice3description: document.getElementById('choice3description'),
 
     interfaceSection: document.getElementById('interface'),
-    voteCount: 0,
 
     randomIndex: function(arr) {
         return Math.floor(Math.random() * arr.length);
     },
 
     getIndeces: function(arr) {
-        var selectedIndeces = [];
-        while (selectedIndeces.length < 3) {
+        var noRepeatArray = this.selectedIndeces;
+        this.selectedIndeces = [];
+        while (this.selectedIndeces.length < 3) {
             var item = this.randomIndex(arr);
 
             //getting indexOf
-            if (selectedIndeces.indexOf(item) === -1) {
-                selectedIndeces.push(item);
+            if (this.selectedIndeces.indexOf(item) === -1 && noRepeatArray.indexOf(item) === -1)  {
+                this.selectedIndeces.push(item);
             }
-
-                //using indexOf for loop
-            // if (selectedIndeces.length === 0) {
-            //     selectedIndeces.push(item);
-            // }
-
-            // for (var i = 0; i < selectedIndeces.length; i++) {
-            //     if (selectedIndeces[i] === item) {
-            //         break;
-            //     } else {
-            //         selectedIndeces.push(item);
-            //         break;
-            //     }
-            // }
         }
         
-        return selectedIndeces;
+        return this.selectedIndeces;
 
     },
 
@@ -101,56 +91,142 @@ var tracker = {
         choice2name.innerText = product2.name;
         choice3name.innerText = product3.name;
 
-        choice1name.id = product1.id;
-        choice2name.id = product2.id;
-        choice3name.id = product3.id;
+        choice1img.src = product1.src;
+        choice1img.alt = index1;
+        choice2img.src = product2.src;
+        choice2img.alt = index2;
+        choice3img.src = product3.src;
+        choice3img.alt = index3;
 
         choice1description.innerText = product1.description;
         choice2description.innerText = product2.description;
         choice3description.innerText = product3.description;
-
-        // choice1img.innerText = product1.img;
-        // choice2img.innerText = product2.img;
-        // choice3img.innertext = product3.img;
-
     },
 
     totalVotes: function(id) {
-        this.voteCount += 1;
-
-        //for loop
-        // for (var i = 0; i < productsArray.length; i++) {
-        //     var product = productsArray[i];
-        //     if (product.id === id) {
-        //         product.voteCount += 1;
-        //     }
-        // }
+        this.voteCount ++;
 
         //for each loop
         productsArray.forEach(function foo (product) {
             if (product.id === id) {
-                product.voteCount += 1;
+                product.voteCount ++;
             }
         });
 
-        if (totalVotes > 25) {
+        if (totalVotes === 25) {
+            var canvas = document.getElementById('votesChart').getContext('2d');
+
+            var barData = {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            fillColor: 'green',
+                            strokeColor: 'pink',
+                            data: []
+                        }
+                    ]
+                }
+            }
+
+            for (var g = 0; g < productsArray.length; g++) {
+                barData.data.labels.push(productsArray[g].name);
+            }
+
+            for (var i = 0; i < productsArray.length; i++) {
+                barData.data.datasets[0].data.push(productsArray[i].voteCount);
+            }
+            new Chart(canvas, barData);
+
             this.showResults();
         }
     },
 
     showResults: function() {
-        this.interfaceSection.removeEventListener('click', voteHandler)
+        for (var i = 0; i < productsArray.length; i++) {
+            console.log(productsArray[i].name + ' got ' + productsArray[i].voteCount + ' votes.');
+        }
+        this.interfaceSection.removeEventListener('click', voteHandler);
     }
 
 };
 
+
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
-    if (event.target.id !== 'interface') {
+    if (event.target.alt) {
+        productsArray[event.target.alt].voteCount ++;
+        productsArray[event.target.alt].timesShown ++;
+        totalVotes ++;
         tracker.totalVotes(event.target.id);
         tracker.displayOptions();
+        console.log(productsArray[event.target.alt]);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Array.prototype.myForEach = function(callback) {
+//   for(var i = 0; i < this.length; i++){
+//     callback(this[i], i, this);
+//   }
+// };
+
+// new Chart(document.getElementById('votesChart'), {
+//     type: 'bar',
+//     data: {
+//         labels:
+//             productsArray.myForEach(function(name) {
+//                 console.log(name);
+//             },
+//         datasets: [
+//             {
+//                 label: 'Votes',
+//                 backgroundColor: 'white',
+//                 data: 
+//                     productsArray.myForEach(function(voteCount) {
+//                         console.log(voteCount);
+//                     })
+//         }]
+//     }
+// });
+
+// var context = document.getElementById('votesChart').getContext('2d');
+// context.fillStyle = 'white';
+// context.fillRect = 
+// new Chart(votesChart).Bar(barData);
+
+// var barData = {
+//     //fill with array of products
+//     labels: [],
+//     datasets: [
+//         {
+//             fillColor: 'white',
+//             strokeColor: 'black',
+//             data: [
+
+//             ]
+//         }
+//     ]
+// };
+
+// productsArray.forEach(function(product)) {
+//     var chartVotes = product.voteCount;
+//     barData.datasets.push(chartVotes);
+// };
 
 productInit();
 tracker.displayOptions();
