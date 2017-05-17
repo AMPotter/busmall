@@ -1,3 +1,5 @@
+'use strict';
+
 var productsArray = [];
 var totalVotes = 0;
 
@@ -111,7 +113,7 @@ var tracker = {
             }
         });
 
-        if (totalVotes > 24) {
+        if (totalVotes === 24) {
             this.showResults();
         }
     },
@@ -124,6 +126,7 @@ var tracker = {
     }
 
 };
+
 tracker.interfaceSection.addEventListener('click', voteHandler);
 function voteHandler() {
     if (event.target.alt) {
@@ -135,6 +138,28 @@ function voteHandler() {
         console.log(productsArray[event.target.alt]);
     }
 }
+
+var canvas = document.getElementById('votesChart').getContext('2d');
+new Chart(votesChart).Bar(barData);
+
+var barData = {
+    //fill with array of products
+    labels: [],
+    datasets: [
+        {
+            fillColor: 'white',
+            strokeColor: 'black',
+            data: [
+
+            ]
+        }
+    ]
+};
+
+productsArray.forEach(function(product)) {
+    var chartVotes = product.voteCount;
+    barData.datasets.push(chartVotes);
+};
 
 productInit();
 tracker.displayOptions();
