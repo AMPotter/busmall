@@ -123,11 +123,12 @@ var tracker = {
             }
         });
 
-        if (totalVotes === 25) {
+        if (totalVotes === 2) {
             var canvas = document.getElementById('votesChart').getContext('2d');
 
             var barData = {
                 type: 'bar',
+                responsive: false,
                 data: {
                     labels: [],
                     datasets: [
@@ -138,7 +139,7 @@ var tracker = {
                         }
                     ]
                 }
-            }
+            };
 
             for (var g = 0; g < productsArray.length; g++) {
                 barData.data.labels.push(productsArray[g].name);

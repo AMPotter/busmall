@@ -11,6 +11,11 @@
     margin: 0px auto;
 }
 
+#votesChart {
+    max-height: 500px;
+
+}
+
 img {
     display: block;
     text-align: center;
@@ -20,9 +25,16 @@ h1, h2, p {
     text-align: center;
 }
 
+h1 {
+    font-family: sans-serif;
+    font-size: 85px;
+}
+
 
 
 #interface {
+    display: flex;
+    align-items: center;
     width: 90%;
     margin: auto;
 }
