@@ -1,4 +1,28 @@
 .choice-div {
     width: 320px;
     float: left;
+    padding: 0 15px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.choice-div img {
+    display: block;
+    margin: 0px auto;
+}
+
+img {
+    display: block;
+    text-align: center;
+}
+
+h1, h2, p {
+    text-align: center;
+}
+
+
+
+#interface {
+    width: 90%;
+    margin: auto;
 }
