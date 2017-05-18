@@ -37,6 +37,16 @@ function productInit() {
     var wineGlass = new Product('Booze Egg', './images/wine-glass.jpg', 'wineglass', 'For slurpin\'.');
 }
 
+productInit();
+
+if (localStorage.length) {
+    productsArray = [];
+    var localProducts = localStorage.getItem('productsArray');
+    console.log(localProducts.voteCount);
+    var realProducts = JSON.parse(localProducts);
+    var productsArray = realProducts;
+}
+
 var tracker = {
     selectedIndeces: [],
 
@@ -140,14 +150,22 @@ var tracker = {
             new Chart(canvas, barData);
 
             this.showResults();
+            this.setToLocal();
         }
     },
 
     showResults: function() {
         for (var i = 0; i < productsArray.length; i++) {
-            console.log(productsArray[i].name + ' got ' + productsArray[i].voteCount + ' votes.');
+            // console.log(productsArray[i].name + ' got ' + productsArray[i].voteCount + ' votes.');
         }
         this.interfaceSection.removeEventListener('click', voteHandler);
+    },
+
+    setToLocal: function() {
+        console.log('setToLocal', productsArray);
+        var productsArrayStringified = JSON.stringify(productsArray);
+        localStorage.setItem('productsArray', productsArrayStringified);
+        console.log(localStorage);
     }
 
 };
@@ -161,72 +179,7 @@ function voteHandler() {
         totalVotes ++;
         tracker.totalVotes(event.target.id);
         tracker.displayOptions();
-        console.log(productsArray[event.target.alt]);
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Array.prototype.myForEach = function(callback) {
-//   for(var i = 0; i < this.length; i++){
-//     callback(this[i], i, this);
-//   }
-// };
-
-// new Chart(document.getElementById('votesChart'), {
-//     type: 'bar',
-//     data: {
-//         labels:
-//             productsArray.myForEach(function(name) {
-//                 console.log(name);
-//             },
-//         datasets: [
-//             {
-//                 label: 'Votes',
-//                 backgroundColor: 'white',
-//                 data: 
-//                     productsArray.myForEach(function(voteCount) {
-//                         console.log(voteCount);
-//                     })
-//         }]
-//     }
-// });
-
-// var context = document.getElementById('votesChart').getContext('2d');
-// context.fillStyle = 'white';
-// context.fillRect = 
-// new Chart(votesChart).Bar(barData);
-
-// var barData = {
-//     //fill with array of products
-//     labels: [],
-//     datasets: [
-//         {
-//             fillColor: 'white',
-//             strokeColor: 'black',
-//             data: [
-
-//             ]
-//         }
-//     ]
-// };
-
-// productsArray.forEach(function(product)) {
-//     var chartVotes = product.voteCount;
-//     barData.datasets.push(chartVotes);
-// };
-
-productInit();
 tracker.displayOptions();
