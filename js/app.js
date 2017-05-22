@@ -17,7 +17,7 @@ function Product (name, src, id, description) {
 function productInit() {
     var bag = new Product('Bag', './images/bag.jpg', 'bag', 'A bag that looks like a little robot.');
     var banana = new Product('Banana Slicer', './images/banana.jpg', 'banana', 'Use for nefarious purposes.');
-    var bathroom = new Product('iPad Poop Mount', './images/bathroom.jpg', 'bathroom', 'Scroll endlessly through your newsfeed atop your porcelain throne.');
+    var bathroom = new Product('iPad Poop Mount', './images/bathroom.jpg', 'bathroom', 'Scroll endlessly atop your porcelain throne.');
     var boots = new Product('Boots', './images/boots.jpg', 'boots', 'Terrible boots.');
     var breakfast = new Product('All In One Breakfast Maker', './images/breakfast.jpg', 'breakfast', 'Perfect for the tiny closet you live in.');
     var bubblegum = new Product('Meatball Gumballs', './images/bubblegum.jpg', 'bubblegum', 'It disappointingly just tastes like regular gum.');
@@ -123,11 +123,12 @@ var tracker = {
             }
         });
 
-        if (totalVotes === 25) {
+        if (totalVotes === 2) {
             var canvas = document.getElementById('votesChart').getContext('2d');
 
             var barData = {
                 type: 'bar',
+                responsive: false,
                 data: {
                     labels: [],
                     datasets: [
@@ -138,7 +139,7 @@ var tracker = {
                         }
                     ]
                 }
-            }
+            };
 
             for (var g = 0; g < productsArray.length; g++) {
                 barData.data.labels.push(productsArray[g].name);

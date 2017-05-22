@@ -1,0 +1,57 @@
+body {
+    background-color: lightblue;
+}
+
+.choice-div {
+    width: 320px;
+    float: left;
+    padding: 0 15px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+.choice-div img {
+    display: block;
+    margin: 0px auto;
+}
+
+#canvas-div {
+    background-color: white;
+}
+
+#votesChart {
+    max-height: 500px;
+}
+
+img {
+    display: block;
+    text-align: center;
+}
+
+h1, h2, p {
+    text-align: center;
+}
+
+#slogan {
+    font-style: italic;
+}
+
+h1 {
+    background-color: pink;
+    font-family: sans-serif;
+    font-size: 85px;
+}
+
+#company-name {
+    font-size: 100px;
+    background-color: purple;
+    color: white;
+    margin: 0 auto;
+}
+
+#interface {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+}
