@@ -123,7 +123,7 @@ var tracker = {
             }
         });
 
-        if (totalVotes === 2) {
+        if (totalVotes === 25) {
             var canvas = document.getElementById('votesChart').getContext('2d');
 
             var barData = {
