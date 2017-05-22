@@ -1,3 +1,7 @@
+body {
+    background-color: lightblue;
+}
+
 .choice-div {
     width: 320px;
     float: left;
@@ -11,9 +15,12 @@
     margin: 0px auto;
 }
 
+#canvas-div {
+    background-color: white;
+}
+
 #votesChart {
     max-height: 500px;
-
 }
 
 img {
@@ -25,12 +32,22 @@ h1, h2, p {
     text-align: center;
 }
 
+#slogan {
+    font-style: italic;
+}
+
 h1 {
+    background-color: pink;
     font-family: sans-serif;
     font-size: 85px;
 }
 
-
+#company-name {
+    font-size: 100px;
+    background-color: purple;
+    color: white;
+    margin: 0 auto;
+}
 
 #interface {
     display: flex;
